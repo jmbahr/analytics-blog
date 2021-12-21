@@ -1,0 +1,11 @@
+default:
+  max_mpg: 25
+  cyl_values: !expr c(4,6)
+
+prod:
+  max_mpg: 25
+  cyl_values: !expr c(4,6,8)
+
+testing:
+  max_mpg: 20
+  cyl_values: !expr c(4)

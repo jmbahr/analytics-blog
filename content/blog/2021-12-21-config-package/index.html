@@ -1,0 +1,86 @@
+---
+title: "config Package"
+author: "Joe Bahr"
+date: 2021-12-21
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="package-overview" class="section level3">
+<h3>Package Overview</h3>
+<p>The <code>config</code> package creates an easy framework for managing hard coded values used throughout a workflow. It also enables multiple configurations for your workflow, a potentially useful feature for development.</p>
+</div>
+<div id="why-is-this-package-useful" class="section level3">
+<h3>Why is this package useful?</h3>
+<p>Hard coded values should be avoided at all costs. We define a hard coded value as any instance of a value being entered directly into the code. Even for quick projects, burying hard coded values within a script can lead to errors and future frustration.</p>
+<pre class="r"><code>library(tidyverse)
+
+# example of using hard coded values
+mtcars %&gt;% 
+  filter(mpg &lt;= 25 &amp;  ## AVOID
+         cyl %in% c(4,6,8)) ## AVOID</code></pre>
+<p>Centralizing all of these values in a config file makes the inputs explicit and transparent to the original programmer and anyone else who inherits the code. Values used multiple times throughout a script also only need to be changed in a single place, further reducing room for error.</p>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>First, we must install and load the <code>config</code> package.</p>
+<pre class="r"><code>install.packages(&quot;config&quot;)</code></pre>
+<pre class="r"><code>library(config)</code></pre>
+<p>Before we can call any functions from the <code>config</code> package, we need to create a config file. This file should be saved as “config.yml” in your project directory. The structure of this file will resemble the following (can omit comments):</p>
+<pre class="r"><code># each config file must have a default configuration
+default:
+  max_mpg: 25
+  carmarker: &quot;all&quot;
+  cyl_values: !expr c(4,6,8)
+
+# here we have a configuration for our production runs  
+prod:
+  max_mpg: 25
+  carmaker: &quot;all&quot;
+  cyl_values: !expr c(4,6,8)
+
+# and finally a configuration for our test runs
+test:
+  max_mpg: 20
+  carmaker: &quot;mercedes&quot;
+  cyl_values: !expr c(4)</code></pre>
+<p>The structure of the above config file is three separate configurations (default, prod, test). Within each of these configurations we have key-value pairs explicitly defined.</p>
+<p>The first two values are simply single values for <code>max_mpg</code> and <code>carmaker</code>, with one being a numeric value and the other a string. Yet for <code>cyl_values</code> we would like to include several values in our configuration, requiring a vector of multiple values.</p>
+<p>The <code>config</code> file allows us to write the actual R code to create this vector by prefacing the expression, <code>c(4,6,8)</code>, with <code>!expr</code>. This particular value is simply a piece of R code with the results being assigned to <code>cyl_values</code> within the configuration.</p>
+<p>Now, we will look at how we read in these values and work them into our scripts.</p>
+</div>
+<div id="read-config-values" class="section level3">
+<h3>Read Config Values</h3>
+<p>The <code>get()</code> function within the <code>config</code> package is able to read and parse a given config file. For more information on the <code>get()</code> function, simply run <code>?config::get()</code> in your console.</p>
+<p>This function has two key arguments we will use every time we call it:</p>
+<ul>
+<li><strong>file</strong>: filepath to the “config.yml” file</li>
+<li><strong>config</strong>: name of configuration to read, in this case we must choose either “default”, “prod”, or “test”</li>
+</ul>
+<p>In this case, we are reading in the “prod” configuration.</p>
+<pre class="r"><code># call config::get()
+config &lt;- config::get(file = &quot;./config.yml&quot;, config = &quot;prod&quot;)</code></pre>
+<p>Now, we can extract the value for max_mpg within the prod configuration. By assigning it to the variable <code>max_mpg</code>, we can now use it throughout the remainder of our workflow.</p>
+<pre class="r"><code>max_mpg &lt;- config$max_mpg
+print(max_mpg)
+## [1] 25</code></pre>
+<p>Same goes for <code>cyl_values</code>.</p>
+<pre class="r"><code>cyl_values &lt;- config$cyl_values
+print(cyl_values)
+## [1] 4 6 8</code></pre>
+</div>
+<div id="using-values-in-a-workflow" class="section level3">
+<h3>Using Values in a Workflow</h3>
+<p>Just like any other variable, we are free to use the values extracted from our config file within our workflow.</p>
+<pre class="r"><code>mtcars %&gt;% 
+  filter(mpg &lt;= max_mpg &amp;
+         cyl %in% cyl_values)
+</code></pre>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>Creating a config file is an effective way to gather all inputs in a single location and ultimately reduce room for error. While it is also possible to simply gather and define all inputs at the top of a script, using a config file puts a bit more rigor behind it and enables multiple configurations. I hope you find this tip useful and start incorporating a config file into your own workflows!</p>
+</div>
