@@ -1,0 +1,116 @@
+---
+title: "config Package"
+author: "Joe Bahr"
+date: 2021-12-21
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      collapse = TRUE)
+```
+
+### Package Overview
+
+The `config` package creates an easy framework for managing hard coded values used throughout a workflow.  It also enables multiple configurations for your workflow, a potentially useful feature for development.
+
+### Why is this package useful?
+
+Hard coded values should be avoided at all costs.  We define a hard coded value as any instance of a value being entered directly into the code.  Even for quick projects, burying hard coded values within a script can lead to errors and future frustration.  
+
+```{r, eval=FALSE}
+library(tidyverse)
+
+# example of using hard coded values
+mtcars %>% 
+  filter(mpg <= 25 &  ## AVOID
+         cyl %in% c(4,6,8)) ## AVOID
+```
+
+Centralizing all of these values in a config file makes the inputs explicit and transparent to the original programmer and anyone else who inherits the code.  Values used multiple times throughout a script also only need to be changed in a single place, further reducing room for error.
+
+### Setup
+
+First, we must install and load the `config` package.
+
+```{r setup, eval=FALSE}
+install.packages("config")
+```
+
+```{r, message=FALSE}
+library(config)
+```
+
+Before we can call any functions from the `config` package, we need to create a config file.  This file should be saved as "config.yml" in your project directory.  The structure of this file will resemble the following (can omit comments):
+
+```{r config, eval = FALSE}
+# each config file must have a default configuration
+default:
+  max_mpg: 25
+  carmarker: "all"
+  cyl_values: !expr c(4,6,8)
+
+# here we have a configuration for our production runs  
+prod:
+  max_mpg: 25
+  carmaker: "all"
+  cyl_values: !expr c(4,6,8)
+
+# and finally a configuration for our test runs
+test:
+  max_mpg: 20
+  carmaker: "mercedes"
+  cyl_values: !expr c(4)
+```
+
+The structure of the above config file is three separate configurations (default, prod, test).  Within each of these configurations we have key-value pairs explicitly defined.
+
+The first two values are simply  single values for `max_mpg` and `carmaker`, with one being a numeric value and the other a string.  Yet for `cyl_values` we would like to include several values in our configuration, requiring a vector of multiple values.  
+
+The `config` file allows us to write the actual R code to create this vector by prefacing the expression, `c(4,6,8)`, with `!expr`.  This particular value is simply a piece of R code with the results being assigned to `cyl_values` within the configuration.
+
+Now, we will look at how we read in these values and work them into our scripts.
+
+### Read Config Values
+
+The `get()` function within the `config` package is able to read and parse a given config file.  For more information on the `get()` function, simply run `?config::get()` in your console.
+
+This function has two key arguments we will use every time we call it:
+
+  - **file**: filepath to the "config.yml" file
+  - **config**: name of configuration to read, in this case we must choose either "default", "prod", or "test"
+ 
+In this case, we are reading in the "prod" configuration.
+
+```{r pressure, echo=TRUE}
+# call config::get()
+config <- config::get(file = "./config.yml", config = "prod")
+```
+
+Now, we can extract the value for max_mpg within the prod configuration.  By assigning it to the variable `max_mpg`, we can now use it throughout the remainder of our workflow.
+```{r}
+max_mpg <- config$max_mpg
+print(max_mpg)
+```
+
+Same goes for `cyl_values`.
+```{r}
+cyl_values <- config$cyl_values
+print(cyl_values)
+```
+
+### Using Values in a Workflow
+
+Just like any other variable, we are free to use the values extracted from our config file within our workflow.
+
+```{r, eval=FALSE}
+mtcars %>% 
+  filter(mpg <= max_mpg &
+         cyl %in% cyl_values)
+
+```
+
+### Conclusion
+
+Creating a config file is an effective way to gather all inputs in a single location and ultimately reduce room for error.  While it is also possible to simply gather and define all inputs at the top of a script, using a config file puts a bit more rigor behind it and enables multiple configurations.  I hope you find this tip useful and start incorporating a config file into your own workflows!
