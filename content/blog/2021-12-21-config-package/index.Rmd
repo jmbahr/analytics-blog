@@ -3,7 +3,7 @@ title: "config Package"
 author: "Joe Bahr"
 date: 2021-12-21
 categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
+tags: ["package-overview"]
 ---
 
 ```{r, include=FALSE}
