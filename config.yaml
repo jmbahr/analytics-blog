@@ -22,7 +22,7 @@ params:
     - python
     - stan
   progressively: no
-  sitename: Hugo Tanka Theme
+  sitename: Sanford Analytics
   uselatex: yes
 markup:
   goldmark:
@@ -37,7 +37,7 @@ menu:
       url: /about/
       weight: 2
     - name: GitHub
-      url: https://github.com/nanxstats
+      url: https://github.com/jmbahr/sanford-analytics-blog
       weight: 3
     - name: Subscribe
       url: /index.xml
