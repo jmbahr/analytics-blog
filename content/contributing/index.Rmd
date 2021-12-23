@@ -1,0 +1,38 @@
+---
+title: "Contributing Guidelines"
+description: A tutorial on contributing a blog post
+date: '2021-12-22'
+menu: main
+---
+
+## Why should you contribute?
+Contributing a blog post is an excellent way to share valuable insights with peers, develop expertise on a subject, and demonstrate proficiency.  
+
+Regardless of experience, we are **all** capable of contributing valuable tips or examples.
+
+## How do I contribute?
+This site is built using the [**blogdown**](https://bookdown.org/yihui/blogdown/) framework that converts R Markdown files into blog posts.  
+
+If you are unfamiliar with R Markdown, it enables the mixing of regular text and code chunks in a manner that is conducive for blog posts.  R Markdown is [well documented](https://rmarkdown.rstudio.com/lesson-1.html) if you would like to learn more specifics.  
+
+For contributions, you can simply download the [template post](https://github.com/jmbahr/sanford-analytics-blog/template-post.Rmd) and modify it for your content.
+
+## Elements of a Post
+#### Metadata
+Every blog post using R Markdown starts with a block that specifies the details for that post.  This is called a YAML header and includes the following:
+
+- title: the title for your post
+- author: contributor's name
+- date: date to publish your post
+- categories: 
+- tags: 
+
+The template blog post includes a template YAML header for you to fill out.
+
+#### Body
+R Markdown files include both plain text and code chunks in the body.  Feel free to structure your content however you see fit.  The template post has several examples outlining how to identify code chunks, format markdown text, incorporate images, add hyperlinks, etc.
+
+Images and original data can be included in your post but must be shared with the R Markdown file.
+
+## Publishing Posts
+Email your blog post (the .Rmd file) and any necessary attachments (images or data) to Joe Bahr and he will incorporate it into the website framework in short order.  Reach out with any questions or blog post suggestions!
