@@ -15,7 +15,7 @@ This site is built using the [**blogdown**](https://bookdown.org/yihui/blogdown/
 
 If you are unfamiliar with R Markdown, it enables the mixing of regular text and code chunks in a manner that is conducive for blog posts.  R Markdown is [well documented](https://rmarkdown.rstudio.com/lesson-1.html) if you would like to learn more specifics.  
 
-For contributions, you can simply download the [template post](https://github.com/jmbahr/sanford-analytics-blog/template-post.Rmd) and modify it for your content.
+For contributions, you can simply download the [template post](https://github.com/jmbahr/sanford-analytics-blog/blob/master/template-post.Rmd) and modify it for your content.
 
 ## Elements of a Post
 #### Metadata
