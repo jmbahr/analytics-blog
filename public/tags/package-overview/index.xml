@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>package-overview on Sanford Analytics Blog</title>
+    <link>https://sanford-analytics.netlify.app/tags/package-overview/</link>
+    <description>Recent content in package-overview on Sanford Analytics Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 21 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://sanford-analytics.netlify.app/tags/package-overview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>config Package</title>
+      <link>https://sanford-analytics.netlify.app/blog/2021-12-21-config-package/</link>
+      <pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sanford-analytics.netlify.app/blog/2021-12-21-config-package/</guid>
+      <description>Package Overview The config package creates an easy framework for managing hard coded values used throughout a workflow. It also enables multiple configurations for your workflow, a potentially useful feature for development.
+ Why is this package useful? Hard coded values should be avoided at all costs. We define a hard coded value as any instance of a value being entered directly into the code. Even for quick projects, burying hard coded values within a script can lead to errors and future frustration.</description>
+    </item>
+    
+  </channel>
+</rss>

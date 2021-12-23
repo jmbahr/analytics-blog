@@ -33,12 +33,15 @@ menu:
     - name: Home
       url: /
       weight: 1
+    - name: Contribute
+      url: /contributing/
+      weight: 2
     - name: About
       url: /about/
-      weight: 2
+      weight: 3
     - name: GitHub
       url: https://github.com/jmbahr/sanford-analytics-blog
-      weight: 3
+      weight: 4
     - name: Subscribe
       url: /index.xml
       weight: 5
