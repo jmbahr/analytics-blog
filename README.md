@@ -1,2 +1,2 @@
-# sanford-analytics-blog
-https://sanford-analytics.netlify.app/
+# Sanford Analytics Blog
+[Link](https://sanford-analytics.netlify.app/)
